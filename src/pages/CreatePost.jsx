@@ -2,7 +2,9 @@ import React from 'react'
 import { addDoc, collection } from 'firebase/firestore'
 import {db, auth} from "../firebase/config"
 import { useNavigate } from 'react-router-dom'
+import useTitle from '../hooks/useTitle'
  const CreatePost = () => {
+  useTitle("Create Post")
   const navigate = useNavigate()
   const postRef = collection(db, "posts")
    async function handleSubmit(event){

@@ -2,7 +2,9 @@ import React, { useEffect, useState } from "react";
 import { getDocs, collection, doc } from "firebase/firestore";
 import { db } from "../firebase/config";
 import { PostCard } from "../components";
+import useTitle from "../hooks/useTitle";
 const Home = () => {
+  useTitle("Home")
   const [posts, setPosts] = useState([]);
   const [toggle, setToggle] = useState([])
   const postsRef = collection(db, "posts");
