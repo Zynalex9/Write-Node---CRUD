@@ -5,14 +5,22 @@ import { signInWithPopup, signOut } from "firebase/auth";
 
 import Logo from "../assets/logo.png";
 const Header = () => {
-  const [isAuth, setIsAuth] = useState(false);
+  const [isAuth, setIsAuth] = useState(
+    JSON.parse(localStorage.getItem("isAuth")) || false
+  );
   function handleSignOut() {
     signOut(auth);
     setIsAuth(false);
+    localStorage.setItem("isAuth", false);
   }
   function handleLogIn() {
-    signInWithPopup(auth, provider).then((result) => console.log(result));
-    setIsAuth(true);
+    signInWithPopup(auth, provider).then((result) => {
+      console.log(result.user.accessToken);
+      if (result.user.accessToken) {
+        setIsAuth(true);
+        localStorage.setItem("isAuth", true);
+      }
+    });
   }
   return (
     <header>
