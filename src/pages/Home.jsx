@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { getDocs, collection, doc } from "firebase/firestore";
 import { db } from "../firebase/config";
-import { PostCard } from "../components";
+import { PostCard, SkeletonCard } from "../components";
 import useTitle from "../hooks/useTitle";
 const Home = () => {
   useTitle("Home")
-  const [posts, setPosts] = useState([]);
+  const [posts, setPosts] = useState([false,false,false,false]);
   const [toggle, setToggle] = useState([])
   const postsRef = collection(db, "posts");
   useEffect(() => {
@@ -18,8 +18,9 @@ const Home = () => {
   }, [toggle]);
   return (
     <section>
-      {posts.map((post) => (
-        <PostCard key={post.id} post={post} toggle={toggle} setToggle={setToggle} />
+      {posts.map((post,idx) => (
+        post ? (
+        <PostCard key={post.id} post={post} toggle={toggle} setToggle={setToggle} />) : (<SkeletonCard key={idx}/>)
       ))}
     </section>
   );
